@@ -54,7 +54,7 @@ def import_globtraj_csv(import_path: str) -> tuple:
     vel_rl = csv_data_temp[:-1, 10]
 
     return refline, width_right, width_left, normvec_normalized, alpha, length_rl, vel_rl, kappa_rl
-
+    # 返回参考线（raceline）,右宽，左宽，法向量，偏移量，截面宽，速度，曲率
 
 # testing --------------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
