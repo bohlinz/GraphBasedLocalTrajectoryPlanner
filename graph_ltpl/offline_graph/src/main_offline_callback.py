@@ -2,7 +2,7 @@ import numpy as np
 import configparser
 import pickle
 import os.path as osfuncs
-import hashlib
+import hashlib  #摘要算法库
 import logging
 
 # custom modules
@@ -124,7 +124,7 @@ def main_offline_callback(globtraj_param_path: str,
         length_rl_tmp.append(0.0)
         length_rl = list(length_rl_tmp)
 
-        # init graph base object
+        # init graph base object 构建离线底图的所有功能
         graph_base = graph_ltpl.data_objects.GraphBase.\
             GraphBase(lat_offset=graph_config.getfloat('LATTICE', 'lat_offset'),
                       num_layers=np.size(alpha, axis=0),

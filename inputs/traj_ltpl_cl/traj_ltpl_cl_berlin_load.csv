@@ -1,7 +1,7 @@
 # ae044b34-3f42-4cce-8aab-c34df34565ed
 # 8c2cec4c57832ff121917315709ba66d2c4a73be
 # 修改了原始数据中所有的分号分隔符为逗号，使之前的读取脚本可以直接使用
-# alpha_m 是 lateral shift in m for every point
+# alpha_m 是 lateral shift in m for every poic'lnt
 # x_ref_m, y_ref_m, width_right_m, width_left_m, x_normvec_m, y_normvec_m, alpha_m, s_racetraj_m, psi_racetraj_rad, kappa_racetraj_radpm, vx_racetraj_mps, ax_racetraj_mps2
 105.0784968, 141.5840670, 4.2292830, 6.0499170, -0.7790824, 0.6269215, 0.1761881, 0.0000000, 2.4608002, 0.0016345, 42.7057036, 3.6617871
 103.2030922, 139.2439689, 4.4181048, 5.8325508, -0.7815506, 0.6238418, 0.1845392, 2.9995929, 2.4670664, 0.0015011, 43.0460536, 3.6192433

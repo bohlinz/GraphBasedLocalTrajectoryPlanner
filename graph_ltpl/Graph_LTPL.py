@@ -47,7 +47,7 @@ class Graph_LTPL(object):
 
                                 * 'globtraj_input_path'     file holding track information (bounds and reference line)
                                 * 'graph_store_path'        path the graph is (tried to be) loaded and stored to
-                                * 'ltpl_offline_param_path' parameters specifying the offline generation of the graph
+                                * 'GraphBase' parameters specifying the offline generation of the graph
                                 * 'ltpl_online_param_path'  parameters specifying the online handling of the graph
                                 * 'graph_log_id'            (if log_to_file) unique id of the current graph (e.g. time)
                                 * 'log_path'                (if log_to_file) loc. where all logged files are placed
