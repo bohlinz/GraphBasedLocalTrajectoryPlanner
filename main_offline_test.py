@@ -17,7 +17,7 @@ def md5(fname):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
-calculated_md5 = md5('inputs/traj_ltpl_cl/traj_ltpl_cl_berlin.csv') # 文件MD5码
+calculated_md5 = md5('inputs/traj_ltpl_cl/traj_ltpl_cl_shanghai.csv') # 文件MD5码
 
 # ------------------------------------------------------------------------------------------------------------------
 # SETUP GRAPH ------------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ calculated_md5 = md5('inputs/traj_ltpl_cl/traj_ltpl_cl_berlin.csv') # 文件MD5�
 
 # load data from csv files
 refline, t_width_right, t_width_left, normvec_normalized, alpha, length_rl, vel_rl, kappa_rl \
-    = graph_ltpl.imp_global_traj.src.import_globtraj_csv.import_globtraj_csv(import_path='inputs/traj_ltpl_cl/traj_ltpl_cl_berlin.csv')
+    = graph_ltpl.imp_global_traj.src.import_globtraj_csv.import_globtraj_csv(import_path='inputs/traj_ltpl_cl/traj_ltpl_cl_shanghai.csv')
 # load graph configuration
 graph_config = configparser.ConfigParser()
 if not graph_config.read('params/ltpl_config_offline.ini'):
@@ -49,12 +49,14 @@ else:
     logging.getLogger("local_trajectory_logger").debug("Input line is interpreted as _unclosed_ track!")
     glob_rl = np.column_stack((s[:-1], raceline_params)) # 开环数据
 
-# based on curvature get index array for selection of normal vectors and corresponding raceline parameters
+# based on curvature get index array for selection of normal vectors and corresponding raceline parameters 
+# 通过曲率信息，对赛道上不同的地方进行变步长采样。曲率越大则采样约密
+
 idx_array = graph_ltpl.imp_global_traj.src.variable_step_size. \
     variable_step_size(kappa=kappa_rl,
                         dist=length_rl,
-                        d_curve=graph_config.getfloat('LATTICE', 'lon_curve_step'),
-                        d_straight=graph_config.getfloat('LATTICE', 'lon_straight_step'),
+                        d_curve=10.0,
+                        d_straight=30.0,
                         curve_th=graph_config.getfloat('LATTICE', 'curve_thr'),
                         force_last=not closed)
 
@@ -125,7 +127,7 @@ for i in state_pos:
     pos = i[0]
     psi = i[1]
     for point in pos:
-        plt.plot(point[0],point[1],'o')
+        plt.plot(point[0],point[1],'.')
     for i in range(len(pos)):
         frame_left_x.append(pos[0][0])
         frame_left_y.append(pos[0][1])
@@ -133,6 +135,18 @@ for i in state_pos:
         frame_right_y.append(pos[-1][1])
 plt.plot(frame_left_x,frame_left_y)
 plt.plot(frame_right_x,frame_right_y)
+plt.axis('equal')
+plt.title('Skeleton of the track')
 plt.show()
 
+# convert to array of arrays
+state_pos_arr = np.empty(shape=(len(state_pos), 2), dtype=np.object)
+state_pos_arr[:] = state_pos
 
+# generate edges (polynomials and coordinate arrays)
+edge = graph_ltpl.offline_graph.src.gen_edges.gen_edges(state_pos=state_pos_arr,
+                                                    graph_base=graph_base,
+                                                    stepsize_approx=graph_config.getfloat('SAMPLING',
+                                                                                        'stepsize_approx'),
+                                                    min_vel_race=graph_config.getfloat('LATTICE', 'min_vel_race'),
+                                                    closed=closed)

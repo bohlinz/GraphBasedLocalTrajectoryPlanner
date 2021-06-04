@@ -22,7 +22,7 @@ import math
 import matplotlib.pyplot as plt
 
 index = 0
-with open('traj_ltpl_cl_berlin_load.csv', mode='r',encoding='utf-8',newline='') as f:
+with open('traj_ltpl_cl_berlin_display.csv', mode='r',encoding='utf-8',newline='') as f:
     reader = csv.reader(f)
     x_ref = []
     y_ref = []
