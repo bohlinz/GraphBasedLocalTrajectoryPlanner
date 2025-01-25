@@ -157,7 +157,7 @@ def main_offline_callback(globtraj_param_path: str,
                               var_heading=graph_config.getboolean('LATTICE', 'variable_heading'))
 
         # convert to array of arrays
-        state_pos_arr = np.empty(shape=(len(state_pos), 2), dtype=np.object)
+        state_pos_arr = np.empty(shape=(len(state_pos), 2), dtype=object)
         state_pos_arr[:] = state_pos
 
         # generate edges (polynomials and coordinate arrays)

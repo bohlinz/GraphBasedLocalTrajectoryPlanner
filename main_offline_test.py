@@ -4,7 +4,10 @@ import pickle
 import os.path as osfuncs
 import hashlib  #摘要算法库
 import logging
+import matplotlib
+#matplotlib.use('TkAgg') # For qt problem
 import matplotlib.pyplot as plt
+
 
 # custom modules
 import graph_ltpl
@@ -17,7 +20,9 @@ def md5(fname):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
-calculated_md5 = md5('inputs/traj_ltpl_cl/traj_ltpl_cl_shanghai.csv') # 文件MD5码
+track_path = "inputs/traj_ltpl_cl/traj_ltpl_cl_berlin.csv"
+#calculated_md5 = md5('inputs/traj_ltpl_cl/traj_ltpl_cl_shanghai.csv') # 文件MD5码
+calculated_md5 = md5(track_path) # 文件MD5码
 
 # ------------------------------------------------------------------------------------------------------------------
 # SETUP GRAPH ------------------------------------------------------------------------------------------------------
@@ -25,7 +30,7 @@ calculated_md5 = md5('inputs/traj_ltpl_cl/traj_ltpl_cl_shanghai.csv') # 文件MD
 
 # load data from csv files
 refline, t_width_right, t_width_left, normvec_normalized, alpha, length_rl, vel_rl, kappa_rl \
-    = graph_ltpl.imp_global_traj.src.import_globtraj_csv.import_globtraj_csv(import_path='inputs/traj_ltpl_cl/traj_ltpl_cl_shanghai.csv')
+    = graph_ltpl.imp_global_traj.src.import_globtraj_csv.import_globtraj_csv(import_path=track_path)
 # load graph configuration
 graph_config = configparser.ConfigParser()
 if not graph_config.read('params/ltpl_config_offline.ini'):
@@ -114,6 +119,7 @@ state_pos = graph_ltpl.offline_graph.src.gen_node_skeleton. \
                         length_raceline=length_rl,
                         var_heading=graph_config.getboolean('LATTICE', 'variable_heading'))
 
+
 #对每个state_pos, 包含数个[temp_pos, temp_psi]
 plt.figure(1)
 num_point_long = len(state_pos)
@@ -140,7 +146,7 @@ plt.title('Skeleton of the track')
 plt.show()
 
 # convert to array of arrays
-state_pos_arr = np.empty(shape=(len(state_pos), 2), dtype=np.object)
+state_pos_arr = np.empty(shape=(len(state_pos), 2), dtype=object)
 state_pos_arr[:] = state_pos
 
 # generate edges (polynomials and coordinate arrays)
