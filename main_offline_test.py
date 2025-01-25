@@ -5,7 +5,7 @@ import os.path as osfuncs
 import hashlib  #摘要算法库
 import logging
 import matplotlib
-#matplotlib.use('TkAgg') # For qt problem
+matplotlib.use('TkAgg') # For qt problem
 import matplotlib.pyplot as plt
 
 
