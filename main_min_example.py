@@ -1,6 +1,8 @@
 import sys
 import os
 
+# 不带障碍物处理的demo
+
 # -- Limit number of OPENBLAS library threads --
 # On linux based operation systems, we observed a occupation of all cores by the underlying openblas library. Often,
 # this slowed down other processes, as well as the planner itself. Therefore, it is recommended to set the number of
