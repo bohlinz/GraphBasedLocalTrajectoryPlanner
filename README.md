@@ -41,3 +41,11 @@ If you find our work useful in your research, please consider citing:
      pages = {3149--3154}
    }
 ```
+
+Note for running
+
+1. tph path
+```
+/miniconda3/envs/glb_plan/lib/python3.9/site-packages/trajectory_planning_helpers 
+```
+2. qp should be 0.1.8 but not 0.1.7
